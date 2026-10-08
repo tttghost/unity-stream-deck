@@ -6,11 +6,11 @@ Stream Deck 버튼으로 Unity Editor의 플레이 모드, 빌드, 캡처와 에
 
 Unity 2022.3 이상과 Stream Deck 7.1 이상이 필요합니다. Git URL로 Unity 패키지를 설치하려면 Git도 설치되어 있어야 합니다.
 
-1. GitHub의 **Releases** 탭에서 사용할 버전(예: `v0.3.0`)을 선택합니다.
+1. GitHub의 **Releases** 탭에서 사용할 버전(예: `v0.3.1`)을 선택합니다.
 2. Unity에서 **Window > Package Manager > + > Install package from git URL**을 열고 다음 주소를 입력합니다. 설치하려는 Release의 버전과 URL 끝의 태그를 맞춥니다.
 
    ```text
-   https://github.com/tttghost/unity-stream-deck.git?path=/project/unity-package#v0.3.0
+   https://github.com/tttghost/unity-stream-deck.git?path=/project/unity-package#v0.3.1
    ```
 
 3. 같은 Release의 `com.tttghost.stream-deck-unity.streamDeckPlugin`을 내려받아 더블클릭하고 Stream Deck에서 설치합니다.
