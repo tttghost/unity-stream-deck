@@ -1,0 +1,15 @@
+{
+  "name": "com.tttghost.unity-stream-deck",
+  "version": "0.3.0",
+  "displayName": "Unity Stream Deck",
+  "description": "Editor-only integration foundation for synchronizing Unity Editor context with Elgato Stream Deck.",
+  "unity": "2022.3",
+  "author": {
+    "name": "tttghost"
+  },
+  "keywords": [
+    "editor",
+    "stream-deck",
+    "elgato"
+  ]
+}

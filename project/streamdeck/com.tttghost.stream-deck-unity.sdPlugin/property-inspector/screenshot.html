@@ -1,0 +1,9 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><link rel="stylesheet" href="pi.css"><script src="https://sdpi-components.dev/releases/v4/sdpi-components.js"></script></head><body>
+<sdpi-item label="캡처 저장 폴더">
+  <sdpi-textfield setting="screenshotPath" placeholder="캡처 폴더를 선택하세요" disabled></sdpi-textfield>
+</sdpi-item>
+<sdpi-button onclick="sendPluginCommand('chooseScreenshotPath')">캡처 폴더 선택</sdpi-button>
+<sdpi-item label="파일명 접두사"><sdpi-textfield setting="argument" placeholder="GameView"></sdpi-textfield></sdpi-item>
+<sdpi-button onclick="sendPluginCommand('openScreenshotFolder')">캡처 폴더 열기</sdpi-button>
+<div class="hint">경로를 선택하면 캡처할 때마다 새 파일로 저장됩니다.</div>
+<script src="screenshot.js?v=1"></script></body></html>

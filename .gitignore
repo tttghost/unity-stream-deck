@@ -1,0 +1,7 @@
+*.DS_Store
+
+# Local development and generated Stream Deck files
+project/streamdeck/node_modules/
+project/streamdeck/com.tttghost.stream-deck-unity.sdPlugin/bin/
+project/streamdeck/com.tttghost.stream-deck-unity.sdPlugin/logs/
+dist/

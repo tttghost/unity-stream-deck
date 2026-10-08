@@ -1,0 +1,80 @@
+{
+  "play": {
+    "source": "d_PlayButton@2x",
+    "size": [
+      32,
+      32
+    ]
+  },
+  "pause": {
+    "source": "d_PauseButton@2x",
+    "size": [
+      32,
+      32
+    ]
+  },
+  "stop": {
+    "source": "d_StopButton@2x",
+    "size": [
+      32,
+      32
+    ]
+  },
+  "build": {
+    "source": "d_BuildProfile Icon",
+    "size": [
+      256,
+      256
+    ]
+  },
+  "window": {
+    "source": "d_UIBuilder@2x",
+    "size": [
+      32,
+      32
+    ]
+  },
+  "method": {
+    "source": "d_cs Script Icon",
+    "size": [
+      256,
+      256
+    ]
+  },
+  "menu": {
+    "source": "d__Menu@2x",
+    "size": [
+      32,
+      32
+    ]
+  },
+  "console": {
+    "source": "d_UnityEditor.ConsoleWindow@2x",
+    "size": [
+      32,
+      32
+    ]
+  },
+  "clear": {
+    "source": "d_clear@2x",
+    "size": [
+      32,
+      32
+    ]
+  },
+  "scene": {
+    "source": "d_SceneAsset Icon",
+    "size": [
+      256,
+      256
+    ]
+  },
+  "camera": {
+    "source": "imgs/ui/camera.svg",
+    "format": "vector"
+  },
+  "clipboard": {
+    "source": "imgs/ui/clipboard.svg",
+    "format": "vector"
+  }
+}

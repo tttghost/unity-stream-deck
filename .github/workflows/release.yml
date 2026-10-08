@@ -1,0 +1,41 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write
+
+jobs:
+  streamdeck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: project/streamdeck/package-lock.json
+      - name: Check release versions
+        run: node project/streamdeck/scripts/check-release-version.mjs "$GITHUB_REF_NAME"
+      - name: Install dependencies
+        working-directory: project/streamdeck
+        run: npm ci
+      - name: Test build button
+        working-directory: project/streamdeck
+        run: node --experimental-strip-types --test tests/build-button.test.ts
+      - name: Package Stream Deck plugin
+        working-directory: project/streamdeck
+        run: npm run dist
+      - name: Publish release asset
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          asset=dist/com.tttghost.stream-deck-unity.streamDeckPlugin
+          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            gh release upload "$GITHUB_REF_NAME" "$asset" --clobber
+          else
+            gh release create "$GITHUB_REF_NAME" "$asset" --verify-tag --generate-notes
+          fi

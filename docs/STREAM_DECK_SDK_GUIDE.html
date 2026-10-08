@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Stream Deck SDK 쉽게 이해하기</title>
+  <style>
+    :root { color-scheme: light dark; --bg:#f5f7fa; --card:#fff; --text:#20252b; --muted:#5e6975; --line:#dce2e8; --blue:#1769aa; --code:#20252b; }
+    @media (prefers-color-scheme: dark) { :root { --bg:#17191c; --card:#22262b; --text:#eef2f5; --muted:#abb5bf; --line:#3a424b; --blue:#70b8f0; --code:#111315; } }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--text); font:16px/1.75 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif; }
+    main { max-width:980px; margin:0 auto; padding:48px 24px 80px; }
+    h1,h2,h3 { line-height:1.3; }
+    h1 { font-size:2.2rem; margin-bottom:8px; }
+    h2 { margin-top:48px; border-bottom:1px solid var(--line); padding-bottom:10px; }
+    h3 { margin-top:28px; }
+    .lead { color:var(--muted); font-size:1.1rem; }
+    .card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:22px 24px; margin:18px 0; }
+    .good { border-left:5px solid #2e9d62; }
+    .warn { border-left:5px solid #d28b22; }
+    .bad { border-left:5px solid #c94b4b; }
+    code { background:color-mix(in srgb, var(--line) 45%, transparent); border-radius:4px; padding:2px 5px; }
+    pre { background:var(--code); color:#e8edf2; border-radius:10px; padding:16px; overflow:auto; line-height:1.5; }
+    table { width:100%; border-collapse:collapse; margin:14px 0; }
+    th,td { border-bottom:1px solid var(--line); text-align:left; padding:10px 8px; vertical-align:top; }
+    th { color:var(--muted); }
+    a { color:var(--blue); }
+    .flow { font-weight:600; text-align:center; padding:18px 8px; background:color-mix(in srgb, var(--blue) 10%, var(--card)); border-radius:10px; }
+    .small { color:var(--muted); font-size:.92rem; }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Stream Deck SDK 쉽게 이해하기</h1>
+  <p class="lead">Elgato Stream Deck SDK를 처음부터 이해하고, 현재 UnityStreamDeck 프로젝트의 구조와 문제 지점을 연결해서 보는 문서입니다.</p>
+
+  <div class="card good">
+    <strong>한 문장 요약</strong><br>
+    Stream Deck 플러그인은 액션을 등록하고, Property Inspector는 액션 설정을 입력하며, Unity 패키지는 별도의 localhost 통신으로 Unity Editor를 제어합니다.
+  </div>
+
+  <h2>1. 전체 구조</h2>
+  <div class="flow">Stream Deck 앱 ↔ Stream Deck 플러그인 ↔ Unity 패키지 ↔ Unity Editor</div>
+  <table>
+    <thead><tr><th>부분</th><th>역할</th><th>현재 프로젝트</th></tr></thead>
+    <tbody>
+      <tr><td>Stream Deck 앱</td><td>버튼 배치, 제목, 프로필, 액션 설정 저장</td><td>Elgato 프로그램</td></tr>
+      <tr><td>플러그인</td><td>버튼을 눌렀을 때 명령 실행, 아이콘·상태 갱신</td><td><code>project/streamdeck/src</code></td></tr>
+      <tr><td>Property Inspector</td><td>씬 이름, 메뉴 경로, 해상도 입력 UI</td><td><code>project/streamdeck/*.sdPlugin/property-inspector</code></td></tr>
+      <tr><td>Unity 패키지</td><td>Unity API를 실제로 호출</td><td><code>project/unity-package/Editor</code></td></tr>
+    </tbody>
+  </table>
+
+  <h2>2. 액션이란?</h2>
+  <p>Stream Deck에 배치하는 버튼 하나가 액션입니다. 예를 들어 플레이, 정지, 씬 열기, 게임 뷰 복사가 각각 액션입니다.</p>
+  <pre><code>@action({ UUID: "com.tttghost.stream-deck-unity.scene-open" })
+export class OpenSceneAction extends SingletonAction&lt;Settings&gt; {
+  override async onKeyDown(ev: KeyDownEvent&lt;Settings&gt;) {
+    const sceneName = ev.payload.settings.argument;
+    // Unity로 scene.open 명령 전송
+  }
+}</code></pre>
+  <p>액션의 <code>UUID</code>는 manifest의 UUID와 반드시 같아야 합니다. 이 UUID가 액션 종류를 구분합니다.</p>
+
+  <h2>3. manifest.json은 무엇인가?</h2>
+  <p>manifest는 Stream Deck에 “이 플러그인에는 어떤 액션이 있는가?”를 알려주는 목록입니다.</p>
+  <pre><code>{
+  "Name": "Unity",
+  "UUID": "com.tttghost.stream-deck-unity",
+  "CodePath": "bin/plugin.js",
+  "Actions": [{
+    "Name": "씬 열기",
+    "UUID": "com.tttghost.stream-deck-unity.scene-open",
+    "PropertyInspectorPath": "property-inspector/scene-open.html"
+  }]
+}</code></pre>
+  <p><code>CodePath</code>는 컴파일된 플러그인 진입점이고, <code>PropertyInspectorPath</code>는 해당 액션을 선택했을 때 보이는 설정 화면입니다.</p>
+
+  <h2>4. Property Inspector란?</h2>
+  <p>Stream Deck 앱 오른쪽에 나타나는 입력 화면입니다. 씬 이름이나 메뉴 경로를 입력하는 HTML 화면이 여기에 해당합니다.</p>
+  <p>공식 문서의 권장 방식은 <code>sdpi-components</code>입니다.</p>
+  <pre><code>&lt;script src="https://sdpi-components.dev/releases/v4/sdpi-components.js"&gt;&lt;/script&gt;
+
+&lt;sdpi-item label="씬 이름 또는 경로"&gt;
+  &lt;sdpi-textfield setting="argument"&gt;&lt;/sdpi-textfield&gt;
+&lt;/sdpi-item&gt;</code></pre>
+  <p>여기서 <code>setting="argument"</code>는 “이 입력값을 액션 설정의 argument라는 이름으로 저장하라”는 뜻입니다.</p>
+
+  <div class="card warn">
+    <strong>중요:</strong> 버튼 상단의 제목과 Property Inspector의 입력값은 서로 다른 값입니다. 버튼 제목에 <code>Main</code>을 입력해도 씬 설정인 <code>argument</code>가 저장되는 것은 아닙니다.
+  </div>
+
+  <h2>5. 액션 설정은 어떻게 저장되는가?</h2>
+  <p>액션마다 별도의 JSON 설정이 저장됩니다.</p>
+  <pre><code>"Settings": {
+  "argument": "Main"
+}</code></pre>
+  <p>플러그인은 버튼을 눌렀을 때 다음처럼 설정을 받습니다.</p>
+  <pre><code>override async onKeyDown(ev: KeyDownEvent&lt;Settings&gt;) {
+  const { argument = "" } = ev.payload.settings;
+}</code></pre>
+  <p>공식 문서에서는 설정을 저장할 때 <code>ev.action.setSettings({...})</code>를 사용하고, 설정을 읽을 때는 가능하면 이벤트의 <code>ev.payload.settings</code>를 사용하도록 설명합니다.</p>
+
+  <h2>6. WebSocket은 두 종류로 나눠서 봐야 한다</h2>
+  <table>
+    <thead><tr><th>통신</th><th>SDK 사용 여부</th><th>설명</th></tr></thead>
+    <tbody>
+      <tr><td>Stream Deck 앱 ↔ 플러그인</td><td>공식 SDK 사용</td><td><code>@elgato/streamdeck</code>가 연결과 이벤트를 관리합니다.</td></tr>
+      <tr><td>Property Inspector ↔ Stream Deck 앱</td><td>공식 컴포넌트 권장</td><td><code>sdpi-components</code>가 설정 저장과 UI 연결을 처리합니다.</td></tr>
+      <tr><td>플러그인 ↔ Unity 패키지</td><td>직접 구현</td><td>Unity용 공식 Stream Deck SDK가 없으므로 localhost WebSocket을 직접 사용합니다.</td></tr>
+    </tbody>
+  </table>
+  <p>따라서 Unity 연결용 WebSocket은 필요한 구조입니다. 문제가 된 것은 Property Inspector까지 수동 WebSocket으로 처리하면서 저장·복원 코드를 여러 번 겹친 부분입니다.</p>
+
+  <h2>7. 현재 프로젝트에서 잘못 꼬였던 부분</h2>
+  <div class="card bad">
+    <ul>
+      <li>Property Inspector가 직접 WebSocket을 열어 설정을 저장했습니다.</li>
+      <li><code>setSettings</code>, <code>sendToPlugin</code>, localStorage, global settings 백업을 동시에 사용했습니다.</li>
+      <li>입력값 복원 시 빈 payload가 기존 값을 덮어쓸 수 있었습니다.</li>
+      <li>버튼 제목과 실제 액션 설정을 혼동하기 쉬웠습니다.</li>
+      <li>설정 저장 로직과 Unity 경로 동기화 로직이 한 파일에 섞여 있었습니다.</li>
+    </ul>
+  </div>
+  <p>현재 단순 입력을 받는 씬 열기, 메뉴 실행, 창 열기, 메서드 호출, 스크린샷, 게임 뷰 복사 액션은 공식 <code>sdpi-textfield</code> 방식으로 통일했습니다. 저장 경로 선택은 공식 <code>sdpi-delegate</code>가 <code>sendToPlugin</code>을 통해 플러그인에 요청하고, 플러그인이 Unity WebSocket을 호출합니다.</p>
+
+  <h2>8. Unity 연결은 어떻게 동작하는가?</h2>
+  <p>플러그인은 Unity 패키지가 열어 둔 localhost WebSocket에 JSON 명령을 보냅니다.</p>
+  <pre><code>{
+  "version": 1,
+  "type": "unity.command",
+  "command": "scene.open",
+  "argument": "Main"
+}</code></pre>
+  <p>Unity 패키지는 이 명령을 받아 Unity 메인 스레드에서 Unity Editor API를 실행합니다. 반대로 Unity의 플레이 상태나 빌드 상태도 WebSocket으로 플러그인에 보낼 수 있습니다.</p>
+
+  <h2>9. 공식 SDK 방식과 현재 프로젝트의 기준</h2>
+  <table>
+    <thead><tr><th>구현 대상</th><th>권장 기준</th></tr></thead>
+    <tbody>
+      <tr><td>액션 등록</td><td><code>SingletonAction</code> + <code>@action</code> + manifest UUID 일치</td></tr>
+      <tr><td>버튼 입력</td><td><code>onKeyDown(ev)</code>에서 <code>ev.payload.settings</code> 읽기</td></tr>
+      <tr><td>설정 저장</td><td>Property Inspector는 <code>sdpi-components setting="..."</code> 사용</td></tr>
+      <tr><td>플러그인 상태 변경</td><td><code>onDidReceiveSettings</code>로 확인</td></tr>
+      <tr><td>Unity 제어</td><td>플러그인과 Unity 패키지 사이의 localhost WebSocket 사용</td></tr>
+      <tr><td>디버깅</td><td><code>streamdeck dev</code> 후 <code>http://localhost:23654/</code>에서 Property Inspector 확인</td></tr>
+    </tbody>
+  </table>
+
+  <h2>10. 앞으로 지켜야 할 규칙</h2>
+  <ol>
+    <li>단순 입력 액션은 직접 WebSocket 저장 코드를 만들지 않는다.</li>
+    <li>액션 변수는 버튼 제목과 분리해서 관리한다.</li>
+    <li>설정 저장소를 여러 개 만들지 않는다.</li>
+    <li>플러그인은 <code>ev.payload.settings</code>를 우선 사용한다.</li>
+    <li>Unity와 통신하는 WebSocket과 Stream Deck 설정 저장 통신을 섞지 않는다.</li>
+    <li>새 액션을 만들면 manifest UUID, Property Inspector, Settings 타입, Unity 명령을 함께 확인한다.</li>
+  </ol>
+
+  <h2>공식 문서</h2>
+  <ul>
+    <li><a href="https://docs.elgato.com/streamdeck/sdk/introduction/getting-started">Getting Started</a></li>
+    <li><a href="https://docs.elgato.com/streamdeck/sdk/guides/actions/">Actions</a></li>
+    <li><a href="https://docs.elgato.com/streamdeck/sdk/guides/ui/">Property Inspectors (UI)</a></li>
+    <li><a href="https://docs.elgato.com/streamdeck/sdk/guides/settings/">Settings</a></li>
+    <li><a href="https://docs.elgato.com/streamdeck/sdk/v1/references/websocket/ui/">Property Inspector WebSocket Reference</a></li>
+  </ul>
+  <p class="small">이 문서는 Elgato Stream Deck SDK 2.0 문서와 현재 UnityStreamDeck 프로젝트 구조를 기준으로 작성되었습니다.</p>
+</main>
+</body>
+</html>

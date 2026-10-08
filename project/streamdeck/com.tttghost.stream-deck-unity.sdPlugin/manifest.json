@@ -1,0 +1,401 @@
+{
+  "$schema": "https://schemas.elgato.com/streamdeck/plugins/manifest.json",
+  "Actions": [
+    {
+      "Controllers": [
+        "Keypad"
+      ],
+      "Icon": "imgs/actions/separator",
+      "Name": "── 플레이 모드 ──",
+      "States": [
+        {
+          "Image": "imgs/actions/separator",
+          "Title": "",
+          "TitleAlignment": "bottom",
+          "TitleColor": "#FFFFFF",
+          "FontSize": 11,
+          "FontStyle": "Bold",
+          "ShowTitle": false
+        }
+      ],
+      "Tooltip": "기능 구분용 라벨",
+      "UUID": "com.tttghost.stream-deck-unity.separator.play-mode"
+    },
+    {
+      "Controllers": [
+        "Keypad"
+      ],
+      "Icon": "imgs/unity-editor/play",
+      "Name": "플레이 / 정지",
+      "States": [
+        {
+          "Image": "imgs/keys/play",
+          "Name": "정지 - 플레이",
+          "Title": "플레이",
+          "TitleAlignment": "bottom",
+          "TitleColor": "#FFFFFF",
+          "FontSize": 11,
+          "FontStyle": "Bold",
+          "ShowTitle": true
+        },
+        {
+          "Image": "imgs/keys/stop",
+          "Name": "실행 중 - 정지",
+          "Title": "정지",
+          "TitleAlignment": "bottom",
+          "TitleColor": "#FFFFFF",
+          "FontSize": 11,
+          "FontStyle": "Bold",
+          "ShowTitle": true
+        }
+      ],
+      "Tooltip": "정지 상태에서는 플레이하고 실행 중에는 정지합니다",
+      "UUID": "com.tttghost.stream-deck-unity.play-stop-toggle",
+      "DisableAutomaticStates": true
+    },
+    {
+      "Controllers": [
+        "Keypad"
+      ],
+      "Icon": "imgs/unity-editor/pause",
+      "Name": "일시정지 / 재개",
+      "States": [
+        {
+          "Image": "imgs/keys/pause",
+          "Name": "실행 중 - 일시정지",
+          "Title": "일시정지",
+          "TitleAlignment": "bottom",
+          "TitleColor": "#FFFFFF",
+          "FontSize": 11,
+          "FontStyle": "Bold",
+          "ShowTitle": true
+        },
+        {
+          "Image": "imgs/keys/play",
+          "Name": "일시정지 - 재개",
+          "Title": "재개",
+          "TitleAlignment": "bottom",
+          "TitleColor": "#FFFFFF",
+          "FontSize": 11,
+          "FontStyle": "Bold",
+          "ShowTitle": true
+        }
+      ],
+      "Tooltip": "Unity 일시정지와 재개를 전환합니다",
+      "UUID": "com.tttghost.stream-deck-unity.pause",
+      "DisableAutomaticStates": true
+    },
+    {
+      "Controllers": [
+        "Keypad"
+      ],
+      "Icon": "imgs/actions/separator",
+      "Name": "── 캡처 ──",
+      "States": [
+        {
+          "Image": "imgs/actions/separator",
+          "Title": "",
+          "TitleAlignment": "bottom",
+          "TitleColor": "#FFFFFF",
+          "FontSize": 11,
+          "FontStyle": "Bold",
+          "ShowTitle": false
+        }
+      ],
+      "Tooltip": "기능 구분용 라벨",
+      "UUID": "com.tttghost.stream-deck-unity.separator.capture"
+    },
+    {
+      "Controllers": [
+        "Keypad"
+      ],
+      "Icon": "imgs/ui/camera",
+      "Name": "게임 뷰 저장",
+      "PropertyInspectorPath": "property-inspector/screenshot.html",
+      "States": [
+        {
+          "Image": "imgs/keys/camera",
+          "Title": "게임 뷰 저장",
+          "TitleAlignment": "bottom",
+          "TitleColor": "#FFFFFF",
+          "FontSize": 11,
+          "FontStyle": "Bold",
+          "ShowTitle": true
+        }
+      ],
+      "Tooltip": "Unity 게임 뷰를 PNG 이미지 파일로 저장합니다.",
+      "UUID": "com.tttghost.stream-deck-unity.screenshot"
+    },
+    {
+      "Controllers": [
+        "Keypad"
+      ],
+      "Icon": "imgs/ui/clipboard",
+      "Name": "게임 뷰 복사",
+      "PropertyInspectorPath": "property-inspector/screenshot-copy.html",
+      "States": [
+        {
+          "Image": "imgs/keys/clipboard",
+          "Title": "게임 뷰 복사",
+          "TitleAlignment": "bottom",
+          "TitleColor": "#FFFFFF",
+          "FontSize": 11,
+          "FontStyle": "Bold",
+          "ShowTitle": true
+        }
+      ],
+      "Tooltip": "Unity 게임 뷰 이미지를 클립보드에 복사합니다. 파일은 저장하지 않습니다.",
+      "UUID": "com.tttghost.stream-deck-unity.screenshot-copy"
+    },
+    {
+      "Controllers": [
+        "Keypad"
+      ],
+      "Icon": "imgs/actions/separator",
+      "Name": "── 에디터 도구 ──",
+      "States": [
+        {
+          "Image": "imgs/actions/separator",
+          "Title": "",
+          "TitleAlignment": "bottom",
+          "TitleColor": "#FFFFFF",
+          "FontSize": 11,
+          "FontStyle": "Bold",
+          "ShowTitle": false
+        }
+      ],
+      "Tooltip": "기능 구분용 라벨",
+      "UUID": "com.tttghost.stream-deck-unity.separator.editor-tools"
+    },
+    {
+      "Controllers": [
+        "Keypad"
+      ],
+      "Icon": "imgs/unity-editor/clear",
+      "Name": "콘솔 지우기",
+      "States": [
+        {
+          "Image": "imgs/keys/clear",
+          "Title": "콘솔 지우기",
+          "TitleAlignment": "bottom",
+          "TitleColor": "#FFFFFF",
+          "FontSize": 11,
+          "FontStyle": "Bold",
+          "ShowTitle": true
+        }
+      ],
+      "Tooltip": "Unity 콘솔을 지웁니다",
+      "UUID": "com.tttghost.stream-deck-unity.console-clear"
+    },
+    {
+      "Controllers": [
+        "Keypad"
+      ],
+      "Icon": "imgs/unity-editor/build",
+      "Name": "빌드",
+      "States": [
+        {
+          "Image": "imgs/keys/build",
+          "Title": "빌드",
+          "TitleAlignment": "bottom",
+          "TitleColor": "#FFFFFF",
+          "FontSize": 11,
+          "FontStyle": "Bold",
+          "ShowTitle": true
+        }
+      ],
+      "Tooltip": "첫 클릭 후 3초 안에 다시 누르면 빌드를 시작합니다. 누르지 않으면 준비로 돌아갑니다. 빌드 중 입력은 무시하며 완료·실패 후 누르면 준비로 돌아갑니다.",
+      "UUID": "com.tttghost.stream-deck-unity.build"
+    },
+    {
+      "Controllers": [
+        "Keypad"
+      ],
+      "Icon": "imgs/unity-editor/scene",
+      "Name": "씬 열기",
+      "PropertyInspectorPath": "property-inspector/scene-open.html",
+      "States": [
+        {
+          "Image": "imgs/keys/scene",
+          "Title": "씬 열기",
+          "TitleAlignment": "bottom",
+          "TitleColor": "#FFFFFF",
+          "FontSize": 11,
+          "FontStyle": "Bold",
+          "ShowTitle": true
+        }
+      ],
+      "Tooltip": "씬 이름 또는 경로로 Unity 씬을 엽니다",
+      "UUID": "com.tttghost.stream-deck-unity.scene-open"
+    },
+    {
+      "Controllers": [
+        "Keypad"
+      ],
+      "Icon": "imgs/unity-editor/window",
+      "Name": "에디터 창 열기",
+      "PropertyInspectorPath": "property-inspector/open-window.html",
+      "States": [
+        {
+          "Image": "imgs/keys/window",
+          "Title": "창 열기",
+          "TitleAlignment": "bottom",
+          "TitleColor": "#FFFFFF",
+          "FontSize": 11,
+          "FontStyle": "Bold",
+          "ShowTitle": true
+        }
+      ],
+      "Tooltip": "전체 타입 이름으로 Unity 에디터 창을 엽니다",
+      "UUID": "com.tttghost.stream-deck-unity.open-window"
+    },
+    {
+      "Controllers": [
+        "Keypad"
+      ],
+      "Icon": "imgs/actions/separator",
+      "Name": "── 사용자 명령 ──",
+      "States": [
+        {
+          "Image": "imgs/actions/separator",
+          "Title": "",
+          "TitleAlignment": "bottom",
+          "TitleColor": "#FFFFFF",
+          "FontSize": 11,
+          "FontStyle": "Bold",
+          "ShowTitle": false
+        }
+      ],
+      "Tooltip": "기능 구분용 라벨",
+      "UUID": "com.tttghost.stream-deck-unity.separator.custom-commands"
+    },
+    {
+      "Controllers": [
+        "Keypad"
+      ],
+      "Icon": "imgs/unity-editor/menu",
+      "Name": "Unity 메뉴 실행",
+      "PropertyInspectorPath": "property-inspector/execute-menu.html",
+      "States": [
+        {
+          "Image": "imgs/keys/menu",
+          "Title": "메뉴 실행",
+          "TitleAlignment": "bottom",
+          "TitleColor": "#FFFFFF",
+          "FontSize": 11,
+          "FontStyle": "Bold",
+          "ShowTitle": true
+        }
+      ],
+      "Tooltip": "전체 메뉴 경로의 Unity 메뉴를 실행합니다",
+      "UUID": "com.tttghost.stream-deck-unity.execute-menu"
+    },
+    {
+      "Controllers": [
+        "Keypad"
+      ],
+      "Icon": "imgs/unity-editor/method",
+      "Name": "에디터 메서드 호출",
+      "PropertyInspectorPath": "property-inspector/invoke-method.html",
+      "States": [
+        {
+          "Image": "imgs/keys/method",
+          "Title": "메서드 호출",
+          "TitleAlignment": "bottom",
+          "TitleColor": "#FFFFFF",
+          "FontSize": 11,
+          "FontStyle": "Bold",
+          "ShowTitle": true
+        }
+      ],
+      "Tooltip": "매개변수 없는 static Unity 에디터 메서드를 호출합니다",
+      "UUID": "com.tttghost.stream-deck-unity.invoke-method"
+    },
+    {
+      "Controllers": [
+        "Keypad"
+      ],
+      "Icon": "imgs/actions/separator",
+      "Name": "── 상태 표시 ──",
+      "States": [
+        {
+          "Image": "imgs/actions/separator",
+          "Title": "",
+          "TitleAlignment": "bottom",
+          "TitleColor": "#FFFFFF",
+          "FontSize": 11,
+          "FontStyle": "Bold",
+          "ShowTitle": false
+        }
+      ],
+      "Tooltip": "기능 구분용 라벨",
+      "UUID": "com.tttghost.stream-deck-unity.separator.status"
+    },
+    {
+      "Controllers": [
+        "Keypad"
+      ],
+      "Icon": "imgs/unity-editor/console",
+      "Name": "콘솔 상태",
+      "States": [
+        {
+          "Image": "imgs/keys/console",
+          "Title": "콘솔 상태",
+          "TitleAlignment": "bottom",
+          "TitleColor": "#FFFFFF",
+          "FontSize": 11,
+          "FontStyle": "Bold",
+          "ShowTitle": true
+        }
+      ],
+      "Tooltip": "Unity 콘솔의 오류와 경고 개수를 표시합니다",
+      "UUID": "com.tttghost.stream-deck-unity.console-status"
+    },
+    {
+      "Controllers": [
+        "Keypad"
+      ],
+      "Icon": "imgs/unity-editor/window",
+      "Name": "에디터 상태",
+      "States": [
+        {
+          "Image": "imgs/keys/editor-status",
+          "Title": "에디터\n씬 없음",
+          "TitleAlignment": "bottom",
+          "TitleColor": "#FFFFFF",
+          "FontSize": 9,
+          "FontStyle": "Bold",
+          "ShowTitle": true
+        }
+      ],
+      "Tooltip": "현재 활성 에디터 창과 씬을 표시합니다",
+      "UUID": "com.tttghost.stream-deck-unity.editor-status"
+    }
+  ],
+  "Author": "tttghost",
+  "Category": "스트림덱 유니티",
+  "CategoryIcon": "imgs/plugin/unity",
+  "CodePath": "bin/plugin.js",
+  "Description": "Controls the Unity Editor over a localhost WebSocket bridge.",
+  "Icon": "imgs/plugin/unity",
+  "Name": "스트림덱 유니티",
+  "Nodejs": {
+    "Version": "20"
+  },
+  "OS": [
+    {
+      "Platform": "mac",
+      "MinimumVersion": "13"
+    },
+    {
+      "Platform": "windows",
+      "MinimumVersion": "10"
+    }
+  ],
+  "SDKVersion": 2,
+  "Software": {
+    "MinimumVersion": "7.1"
+  },
+  "UUID": "com.tttghost.stream-deck-unity",
+  "Version": "0.3.0.0"
+}
